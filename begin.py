@@ -1,0 +1,8 @@
+#!/usr/bin/env python
+# -*- coding:utf-8 -*-
+
+from scrapy import cmdline
+
+cmdline.execute("scrapy crawl detailsSpider".split())
+# cmdline.execute("scrapy crawl jdListBearSpider".split())
+# cmdline.execute("scrapy crawl jdListSpider".split())
