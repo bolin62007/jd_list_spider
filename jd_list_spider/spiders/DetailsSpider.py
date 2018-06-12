@@ -46,7 +46,12 @@ class jdListBearSpider(scrapy.Spider):
 
         item = DetailsItem()
         item['id'] = id
-        item['price'] = priceList[0]['p']
+        try:
+            item['price'] = priceList[0]['p']
+        except Exception as e:
+            print('err response.url: ' + response.url)
+            return
+
         item['name'] = response.css('#parameter-brand > li::attr(title)').extract_first()
         item['store'] = response.css('#popbox > div > div.mt > h3 > a::attr(title)').extract_first()
         item['goods_name'] = goods_dist[0]
@@ -91,7 +96,7 @@ class jdListBearSpider(scrapy.Spider):
 
     def getLIdsResult(self):
         folder = os.path.abspath('.')
-        xlsx_path = os.path.join(folder, 'id_list.xlsx')
+        xlsx_path = os.path.join(folder, 'ids3.xlsx')
         wb = load_workbook(xlsx_path)
         sheet_name = wb.get_sheet_names()
         sheet = wb.get_sheet_by_name(sheet_name[0])
@@ -99,9 +104,8 @@ class jdListBearSpider(scrapy.Spider):
         array = []
         for column in sheet.columns:
             for cell in column:
-                if (len(cell.value) > 3):
-                    array.extend(json.loads(cell.value))
-
+                # array.extend(json.loads(cell.value))
+                array.append(str(cell.value))
         array = list(set(array)) # list 去重
         print('array: ' + str(len(array)))
         return array
