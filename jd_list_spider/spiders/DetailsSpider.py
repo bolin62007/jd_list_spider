@@ -91,7 +91,7 @@ class jdListBearSpider(scrapy.Spider):
 
     def getLIdsResult(self):
         folder = os.path.abspath('.')
-        xlsx_path = folder + '\id_list.xlsx'
+        xlsx_path = os.path.join(folder, 'id_list.xlsx')
         wb = load_workbook(xlsx_path)
         sheet_name = wb.get_sheet_names()
         sheet = wb.get_sheet_by_name(sheet_name[0])
